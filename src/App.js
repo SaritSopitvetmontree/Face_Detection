@@ -95,7 +95,9 @@ class App extends Component {
             })
             .catch(console.log)
         }
-        this.displayFaceBox(this.calculateFaceLocation(response))
+        if(response){
+          this.displayFaceBox(this.calculateFaceLocation(response))
+        }
       })
       .catch(err => console.log(err));
   }
@@ -111,16 +113,16 @@ class App extends Component {
 
   render() {
     const { isSignedIn, imageUrl, route, box } = this.state;
-    const boxtest = [
-      {leftCol: 100,
-      topRow: 0,
-      rightCol: 200,
-      bottomRow: 200},
-      {leftCol: 10,
-      topRow: 10,
-      rightCol: 20,
-      bottomRow: 20}
-    ]
+    // const boxtest = [
+    //   {leftCol: 100,
+    //   topRow: 0,
+    //   rightCol: 200,
+    //   bottomRow: 200},
+    //   {leftCol: 10,
+    //   topRow: 10,
+    //   rightCol: 20,
+    //   bottomRow: 20}
+    // ]
     
     return (
       <div className="App">
