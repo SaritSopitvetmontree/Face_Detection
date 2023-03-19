@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Face_Detection/static/css/main.421399ef.css",
+    "main.js": "/Face_Detection/static/js/main.78098609.js",
+    "static/media/brain.png": "/Face_Detection/static/media/brain.94436c38900f6c631ded.png",
+    "index.html": "/Face_Detection/index.html",
+    "main.421399ef.css.map": "/Face_Detection/static/css/main.421399ef.css.map",
+    "main.78098609.js.map": "/Face_Detection/static/js/main.78098609.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.421399ef.css",
+    "static/js/main.78098609.js"
+  ]
+}
