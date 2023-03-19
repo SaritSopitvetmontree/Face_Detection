@@ -18,7 +18,7 @@ const app = new Clarifai.App({
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  box: [],
   route: 'signin',
   isSignedIn: false,
   user: {
@@ -48,16 +48,21 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    console.log('data -> ',data.outputs[0].data.regions);
+    const clarifaiFace = data.outputs[0].data.regions.map((eachRegion) => {
+      return eachRegion.region_info.bounding_box;
+    })
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
-    }
+    return clarifaiFace.map((eachFace) => {
+      return {
+        leftCol: eachFace.left_col * width,
+        topRow: eachFace.top_row * height,
+        rightCol: width - (eachFace.right_col * width),
+        bottomRow: height - (eachFace.bottom_row * height)
+      }
+    })
   }
 
   displayFaceBox = (box) => {
@@ -80,7 +85,7 @@ class App extends Component {
           type: 'visual-detector',
         }, this.state.input)
       .then(response => {
-        // console.log('hi', response)
+        console.log('Response -> ', response)
         if (response) {
           fetch('http://localhost:3000/image', {
             method: 'put',
@@ -113,16 +118,6 @@ class App extends Component {
 
   render() {
     const { isSignedIn, imageUrl, route, box } = this.state;
-    // const boxtest = [
-    //   {leftCol: 100,
-    //   topRow: 0,
-    //   rightCol: 200,
-    //   bottomRow: 200},
-    //   {leftCol: 10,
-    //   topRow: 10,
-    //   rightCol: 20,
-    //   bottomRow: 20}
-    // ]
     
     return (
       <div className="App">
@@ -140,7 +135,6 @@ class App extends Component {
                 onButtonSubmit={this.onButtonSubmit}
               />
               <FaceRecognition box={box} imageUrl={imageUrl} />
-              {/* {console.log(this.state.box)} */}
             </div>
           : (
              route === 'signin'
